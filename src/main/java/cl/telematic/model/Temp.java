@@ -7,7 +7,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Electrical {
+public class Temp {
 
     @Id
     @GeneratedValue
@@ -17,9 +17,7 @@ public class Electrical {
     @NotNull
     private RemoteXml originXml;
 
-    private Double energyReading;
-
-    private Double powerReading;
+    private Double temperatureReading;
 
     public Long getId() {
         return id;
@@ -37,19 +35,11 @@ public class Electrical {
         this.originXml = originXml;
     }
 
-    public Double getEnergyReading() {
-        return energyReading;
+    public Double getTemperatureReading() {
+        return temperatureReading;
     }
 
-    public void setEnergyReading(Double energyReading) {
-        this.energyReading = energyReading;
-    }
-
-    public Double getPowerReading() {
-        return powerReading;
-    }
-
-    public void setPowerReading(Double powerReading) {
-        this.powerReading = powerReading;
+    public void setTemperatureReading(Double temperatureReading) {
+        this.temperatureReading = temperatureReading;
     }
 }

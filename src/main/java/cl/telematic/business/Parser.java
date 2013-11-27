@@ -16,7 +16,7 @@ public class Parser {
     private static final Logger Logger = org.jboss.logging.Logger.getLogger(Parser.class);
 
 
-    public Float[] parse(String response) {
+    public Double[] parse(String response) {
 
         Reader reader = new StringReader(response);
         XMLInputFactory xmlif = XMLInputFactory.newInstance();
@@ -35,11 +35,16 @@ public class Parser {
                             xml.next();
                             xml.next();
                             String text = xml.getElementText();
-                            Logger.info(text);
+                            //Logger.info(text);
                             String[] numbers = text.split(" ");
-                            Float values[] = new Float[2];
-                            values[0] = Float.parseFloat(numbers[1]);
-                            values[1] = Float.parseFloat(numbers[2]);
+                            for(String s : numbers){
+                                Logger.info(s);
+                            }
+
+                            Double values[] = new Double[3];
+                            values[0] = Double.parseDouble(numbers[0]);
+                            values[1] = Double.parseDouble(numbers[1]);
+                            values[2] = Double.parseDouble(numbers[2]);
                             return values;
                         }
                         break;
