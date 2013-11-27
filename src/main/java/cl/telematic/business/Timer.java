@@ -18,9 +18,6 @@ import java.util.List;
 @Stateless
 public class Timer {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @EJB
     private ElectricDao electricDao;
 
@@ -45,7 +42,7 @@ public class Timer {
         RemoteXml remoteXml = new RemoteXml();
         remoteXml.setContent(xml);
         remoteXml.setCreatedOn(new Date());
-        entityManager.persist(remoteXml);
+        remoteXmlDao.save(remoteXml);
 
     }
 
@@ -57,7 +54,9 @@ public class Timer {
             Electrical electrical = new Electrical();
             electrical.setOriginXml(remoteXml);
             String content = remoteXml.getContent();
-            parse.parse(content, electrical);
+            Float[] values = parse.parse(content);
+            electrical.setEnergyReading(values[0]);
+            electrical.setPowerReading(values[1]);
             electricDao.save(electrical);
             remoteXmlDao.update(remoteXml);
 

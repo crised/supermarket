@@ -16,7 +16,7 @@ public class Parser {
     private static final Logger Logger = org.jboss.logging.Logger.getLogger(Parser.class);
 
 
-    public Electrical parse(String response, Electrical electrical) {
+    public Float[] parse(String response) {
 
         Reader reader = new StringReader(response);
         XMLInputFactory xmlif = XMLInputFactory.newInstance();
@@ -37,13 +37,10 @@ public class Parser {
                             String text = xml.getElementText();
                             Logger.info(text);
                             String[] numbers = text.split(" ");
-                            Float energyReading = Float.parseFloat(numbers[1]);
-                            Float powerReading = Float.parseFloat(numbers[2]);
-                            Logger.info(energyReading);
-                            Logger.info(powerReading);
-                            electrical.setEnergyReading(energyReading);
-                            electrical.setPowerReading(powerReading);
-                            return electrical;
+                            Float values[] = new Float[2];
+                            values[0] = Float.parseFloat(numbers[1]);
+                            values[1] = Float.parseFloat(numbers[2]);
+                            return values;
                         }
                         break;
                     case XMLStreamConstants.ATTRIBUTE:

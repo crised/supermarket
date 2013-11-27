@@ -13,8 +13,12 @@ public class RemoteXmlDao {
     private EntityManager entityManager;
 
 
-    public RemoteXml update(RemoteXml remoteXml){
+    public RemoteXml update(RemoteXml remoteXml) {
         return entityManager.merge(remoteXml);
+    }
+
+    public void save(RemoteXml remoteXml) {
+        entityManager.persist(remoteXml);
     }
 
 
