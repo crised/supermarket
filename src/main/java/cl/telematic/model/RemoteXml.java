@@ -1,20 +1,29 @@
 package cl.telematic.model;
 
 import javax.persistence.*;
+import javax.persistence.metamodel.Type;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-public class FieldServerXml {
+public class RemoteXml {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(length=10000)
+    //@Lob
+    //@org.hibernate.annotations.Type(type="org.hibernate.type.MaterializedClobType")
+     private String content;
+
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
     private Date createdOn;
 
-    @Lob
-    private String content;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date parsed;
+
 
     public Long getId() {
         return id;
@@ -38,5 +47,13 @@ public class FieldServerXml {
 
     public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public Date getParsed() {
+        return parsed;
+    }
+
+    public void setParsed(Date parsed) {
+        this.parsed = parsed;
     }
 }

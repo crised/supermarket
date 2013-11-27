@@ -1,5 +1,8 @@
 package cl.telematic.business;
 
+import cl.telematic.model.Electrical;
+import org.jboss.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -10,7 +13,10 @@ import java.io.StringReader;
 @Stateless
 public class Parser {
 
-    public void Parse(String response) {
+    private static final Logger Logger = org.jboss.logging.Logger.getLogger(Parser.class);
+
+
+    public Electrical parse(String response, Electrical electrical) {
 
         Reader reader = new StringReader(response);
         XMLInputFactory xmlif = XMLInputFactory.newInstance();
@@ -24,43 +30,39 @@ public class Parser {
 
                 switch (event) {
 
-                    /*case XMLStreamConstants.START_DOCUMENT:
-                        System.out.println("Start Document " + xml.getVersion());
-                        break; Version is Null */
-
                     case XMLStreamConstants.START_ELEMENT:
-                        //System.out.println("Start Element " + xml.getName() + " " + xml.getAttributeCount());
-
                         if (xml.getAttributeValue(0).equals("DA_Dev_1000")) {
-                            System.out.println("Inside if");
-                            System.out.println(xml.getAttributeName(0).toString() + " " + xml.getAttributeValue(0));
                             xml.next();
                             xml.next();
-                            System.out.println(xml.getAttributeName(0).toString() + " " + xml.getAttributeValue(0));
-                            System.out.println(xml.getElementText());
+                            String text = xml.getElementText();
+                            Logger.info(text);
+                            String[] numbers = text.split(" ");
+                            Float energyReading = Float.parseFloat(numbers[1]);
+                            Float powerReading = Float.parseFloat(numbers[2]);
+                            Logger.info(energyReading);
+                            Logger.info(powerReading);
+                            electrical.setEnergyReading(energyReading);
+                            electrical.setPowerReading(powerReading);
+                            return electrical;
                         }
                         break;
                     case XMLStreamConstants.ATTRIBUTE:
-                        System.out.println("Attribute " + xml.getAttributeName(0));
                         break;
                     case XMLStreamConstants.END_DOCUMENT:
                         xml.close();
-                        System.out.println("End");
                         break;
                 }
 
                 event = xml.next();
 
-
             }
-
+            return null;
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Logger.info("error");
+            Logger.info(e.getMessage());
+            return null;
         }
 
-
     }
-
-
 }
