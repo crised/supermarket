@@ -9,7 +9,7 @@ public class Fetcher {
 
     static String url = "http://64.60.250.222/data_arrays.xml";
 
-    public void fetch() {
+    public String fetch() {
 
         Client client = ClientBuilder.newClient();
 
@@ -17,7 +17,10 @@ public class Fetcher {
         Response response = target.request().get();
         String value = response.readEntity(String.class);
         response.close();
-        System.out.println(value);
+        //System.out.println(value);
+        return value;
     }
+
+
 
 }

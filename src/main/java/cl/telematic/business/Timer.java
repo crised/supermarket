@@ -13,7 +13,11 @@ public class Timer {
     public void doWork(){
 
         Fetcher fetcher = new Fetcher();
-        fetcher.fetch();
+        Parser parser = new Parser();
+
+        String response = fetcher.fetch();
+        parser.Parse(response);
+
 
     }
 }
