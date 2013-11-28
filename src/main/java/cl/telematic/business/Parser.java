@@ -38,7 +38,7 @@ public class Parser {
                             //Logger.info(text);
                             String[] numbers = text.split(" ");
                             for(String s : numbers){
-                                Logger.info(s);
+                                //Logger.info(s);
                             }
 
                             Double values[] = new Double[3];
@@ -61,7 +61,7 @@ public class Parser {
             return null;
 
         } catch (Exception e) {
-            Logger.info("error");
+            Logger.error("error");
             Logger.info(e.getMessage());
             return null;
         }

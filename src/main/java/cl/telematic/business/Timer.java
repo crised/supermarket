@@ -64,6 +64,7 @@ public class Timer {
         List<RemoteXml> remoteXmlList = remoteXmlDao.getNewXmls();
 
         for(RemoteXml remoteXml : remoteXmlList){
+            //More objects can be created if 1 XML brings more than one of the same object.
             Electrical electrical = new Electrical();
             Temp temp = new Temp();
             temp.setOriginXml(remoteXml);
