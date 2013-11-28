@@ -12,6 +12,9 @@ public class Temp {
         created = new Date();
     }
 
+    public Temp() {
+    }
+
     @Id
     @GeneratedValue
     private Long id;

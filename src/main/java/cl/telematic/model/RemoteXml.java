@@ -8,6 +8,9 @@ import java.util.Date;
 @Entity
 public class RemoteXml {
 
+    public RemoteXml() {
+    }
+
     @Id
     @GeneratedValue
     private Long id;

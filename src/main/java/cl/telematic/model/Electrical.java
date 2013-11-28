@@ -12,6 +12,9 @@ public class Electrical {
         created = new Date();
     }
 
+    public Electrical() {
+    }
+
     @Id
     @GeneratedValue
     private Long id;
