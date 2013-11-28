@@ -52,7 +52,7 @@ public class Parser {
                         {
 
                             Electrical electrical = electricals.get(ordinal); //Electrical Object
-                            electrical.setRealRead(correctDate(xml.getAttributeValue(1)));
+                            electrical.setRealRead(getRealDate(xml.getAttributeValue(1)));
                             List<Double> doubles = extractDoubles(xml.getElementText());
                             electrical.setPowerReading(doubles.get(0));
                             electrical.setEnergyReading(doubles.get(1));
@@ -63,7 +63,7 @@ public class Parser {
                         {
                             ordinal = ordinal - 4; //ordinal 4 must be 0, ordinal 5 must be 1
                             Temp temp = temps.get(ordinal);
-                            temp.setRealRead(correctDate(xml.getAttributeValue(1)));
+                            temp.setRealRead(getRealDate(xml.getAttributeValue(1)));
                             List<Double> doubles = extractDoubles(xml.getElementText());
                             temp.setTemperatureReading(doubles.get(0));
                         }
@@ -95,11 +95,10 @@ public class Parser {
         return values;
     }
 
-    private Date correctDate(String dataAge) {
+    private Date getRealDate(String dataAge) {
 
         // days:hours:minutes:seconds.ms
         // 19:16:00:43.239s
-        Logger.warn(dataAge);
         String dataAgeStrip = dataAge.substring(0, dataAge.indexOf("."));
         String numbers[] = dataAgeStrip.split(":");
         Calendar cal = Calendar.getInstance();
@@ -107,7 +106,6 @@ public class Parser {
         cal.add(Calendar.HOUR, -Integer.valueOf(numbers[1]));
         cal.add(Calendar.MINUTE, -Integer.valueOf(numbers[2]));
         cal.add(Calendar.SECOND, -Integer.valueOf(numbers[3]));
-        Logger.warn(cal.getTime());
         return cal.getTime();
 
     }
