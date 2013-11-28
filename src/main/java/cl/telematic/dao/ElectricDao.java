@@ -21,5 +21,13 @@ public class ElectricDao {
         entityManager.persist(electrical);
     }
 
+    public void saveElectricals(@NonNull List<Electrical> electricals){
+
+        for(Electrical electrical : electricals){
+            entityManager.persist(electrical);
+        }
+
+    }
+
 
 }

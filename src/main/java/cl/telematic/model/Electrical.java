@@ -1,13 +1,16 @@
 package cl.telematic.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class Electrical {
+
+    public Electrical(RemoteXml remoteXml) {
+        originXml = remoteXml;
+        created = new Date();
+    }
 
     @Id
     @GeneratedValue
@@ -17,9 +20,21 @@ public class Electrical {
     @NotNull
     private RemoteXml originXml;
 
+    @NotNull
     private Double energyReading;
 
+    @NotNull
     private Double powerReading;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    private Date created;
+
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    private Date realRead;
+
 
     public Long getId() {
         return id;
@@ -51,5 +66,21 @@ public class Electrical {
 
     public void setPowerReading(Double powerReading) {
         this.powerReading = powerReading;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getRealRead() {
+        return realRead;
+    }
+
+    public void setRealRead(Date realRead) {
+        this.realRead = realRead;
     }
 }

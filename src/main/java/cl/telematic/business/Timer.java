@@ -14,8 +14,7 @@ import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Stateless
 public class Timer {
@@ -65,23 +64,46 @@ public class Timer {
 
         for(RemoteXml remoteXml : remoteXmlList){
             //More objects can be created if 1 XML brings more than one of the same object.
-            Electrical electrical = new Electrical();
-            Temp temp = new Temp();
-            temp.setOriginXml(remoteXml);
-            electrical.setOriginXml(remoteXml);
+            List<Electrical> electricals = electricalsFactory(remoteXml);
+            List<Temp> temps = tempFactory(remoteXml);
             remoteXml.setParsed(new Date());
             remoteXmlDao.update(remoteXml);
             String content = remoteXml.getContent();
-            Double[] values = parse.parse(content);
-            electrical.setEnergyReading(values[0]);
-            electrical.setPowerReading(values[1]);
-            temp.setTemperatureReading(values[2]);
-            electricDao.save(electrical);
-            tempDao.save(temp);
+            parse.parse(electricals,temps,content);
+            electricDao.saveElectricals(electricals);
+            tempDao.saveTemps(temps);
 
         }
 
     }
+
+    private List<Electrical> electricalsFactory(RemoteXml remoteXml){
+
+        List<Electrical> electricals = new ArrayList<>();
+        electricals.add(new Electrical(remoteXml));
+        electricals.add(new Electrical(remoteXml));
+        electricals.add(new Electrical(remoteXml));
+        electricals.add(new Electrical(remoteXml));
+
+        return electricals;
+
+    }
+
+    private List<Temp> tempFactory(RemoteXml remoteXml){
+
+        List<Temp> temps = new ArrayList<>();
+        temps.add(new Temp(remoteXml));
+        temps.add(new Temp(remoteXml));
+
+        return temps;
+
+
+
+    }
+
+
+
+
 
 
 }

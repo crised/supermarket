@@ -7,6 +7,7 @@ import com.sun.javafx.beans.annotations.NonNull;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Stateless
 public class TempDao {
@@ -19,5 +20,13 @@ public class TempDao {
 
     public void save(@NonNull Temp temp) {
         entityManager.persist(temp);
+    }
+
+    public void saveTemps(@NonNull List<Temp> temps){
+
+        for(Temp temp : temps){
+            entityManager.persist(temp);
+        }
+
     }
 }

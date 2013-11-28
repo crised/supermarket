@@ -1,13 +1,16 @@
 package cl.telematic.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class Temp {
+
+    public Temp(RemoteXml remoteXml) {
+        originXml = remoteXml;
+        created = new Date();
+    }
 
     @Id
     @GeneratedValue
@@ -18,6 +21,12 @@ public class Temp {
     private RemoteXml originXml;
 
     private Double temperatureReading;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date realRead;
 
     public Long getId() {
         return id;
@@ -41,5 +50,21 @@ public class Temp {
 
     public void setTemperatureReading(Double temperatureReading) {
         this.temperatureReading = temperatureReading;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getRealRead() {
+        return realRead;
+    }
+
+    public void setRealRead(Date realRead) {
+        this.realRead = realRead;
     }
 }
